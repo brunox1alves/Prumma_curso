@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Compras</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        form {
+            max-width: 300px;
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        input[type="text"],
+        input[type="number"] {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+        }
+
+        input[type="submit"] {
+            background-color: #4caf50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        .excluirBtn {
+            background-color: #f44336;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Lista de Compras -->
+    <h2>Lista de Compras</h2>
+
+    <form id="compraForm">
+        <label for="produtoNome">Produto:</label>
+        <input type="text" id="produtoNome" name="produtoNome" required>
+
+        <label for="unidade">Unidade:</label>
+        <input type="number" id="unidade" name="unidade" required>
+
+        <label for="preco">Preço:</label>
+        <input type="text" id="preco" name="preco" required>
+
+        <input type="submit" value="Adicionar Item à Lista">
+    </form>
+
+    <table id="tabelaCompras">
+        <thead>
+            <tr>
+                <th>Produto</th>
+                <th>Unidade</th>
+                <th>Preço</th>
+                <th>Ação</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Linhas da tabela serão adicionadas dinamicamente usando JavaScript -->
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="2">Total</td>
+                <td id="total">R$ 0.00</td>
+                <td></td>
+            </tr>
+        </tfoot>
+    </table>
+
+    <script>
+        document.getElementById('compraForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            // Obter valores do formulário
+            var produtoNome = document.getElementById('produtoNome').value;
+            var unidade = parseInt(document.getElementById('unidade').value);
+            var preco = parseFloat(document.getElementById('preco').value);
+
+            // Adicionar linha à tabela
+            var tabela = document.getElementById('tabelaCompras').getElementsByTagName('tbody')[0];
+            var novaLinha = tabela.insertRow(tabela.rows.length);
+            var celulaProduto = novaLinha.insertCell(0);
+            var celulaUnidade = novaLinha.insertCell(1);
+            var celulaPreco = novaLinha.insertCell(2);
+            var celulaAcao = novaLinha.insertCell(3);
+
+            celulaProduto.innerHTML = produtoNome;
+            celulaUnidade.innerHTML = unidade;
+            celulaPreco.innerHTML = 'R$ ' + preco.toFixed(2);
+
+            // Adicionar botão de exclusão
+            var excluirBtn = document.createElement('button');
+            excluirBtn.innerHTML = 'Excluir';
+            excluirBtn.className = 'excluirBtn';
+            excluirBtn.addEventListener('click', function() {
+                tabela.deleteRow(this.parentNode.parentNode.rowIndex);
+                calcularTotal();
+            });
+            celulaAcao.appendChild(excluirBtn);
+
+            // Limpar campos do formulário
+            document.getElementById('produtoNome').value = '';
+            document.getElementById('unidade').value = '';
+            document.getElementById('preco').value = '';
+
+            calcularTotal();
+        });
+
+        function calcularTotal() {
+            var tabela = document.getElementById('tabelaCompras').getElementsByTagName('tbody')[0];
+            var total = 0;
+
+            for (var i = 0; i < tabela.rows.length; i++) {
+                total += parseFloat(tabela.rows[i].cells[2].innerHTML.replace('R$ ', ''));
+            }
+
+            document.getElementById('total').innerHTML = 'R$ ' + total.toFixed(2);
+        }
+    </script>
+
+</body>
+</html>

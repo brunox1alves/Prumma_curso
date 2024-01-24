@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabela de Preços</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        form {
+            max-width: 300px;
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+        }
+
+        input[type="submit"] {
+            background-color: #4caf50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+        .excluirBtn {
+            background-color: #f44336;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Tabela de Preços -->
+    <h2>Tabela de Preços</h2>
+
+    <form id="produtoForm">
+        <label for="produtoNome">Produto:</label>
+        <input type="text" id="produtoNome" name="produtoNome" required>
+
+        <label for="precoCompra">Preço de Compra:</label>
+        <input type="text" id="precoCompra" name="precoCompra" required>
+
+        <label for="precoRevenda">Preço de Revenda:</label>
+        <input type="text" id="precoRevenda" name="precoRevenda" required>
+
+        <input type="submit" value="Adicionar Produto">
+    </form>
+
+    <table id="tabelaPrecos">
+        <thead>
+            <tr>
+                <th>Produto</th>
+                <th>Preço de Compra</th>
+                <th>Preço de Revenda</th>
+                <th>Lucro (%)</th>
+                <th>Ação</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Linhas da tabela serão adicionadas dinamicamente usando JavaScript -->
+        </tbody>
+    </table>
+
+    <script>
+        document.getElementById('produtoForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            // Obter valores do formulário
+            var produtoNome = document.getElementById('produtoNome').value;
+            var precoCompra = parseFloat(document.getElementById('precoCompra').value);
+            var precoRevenda = parseFloat(document.getElementById('precoRevenda').value);
+
+            // Calcular porcentagem de lucro
+            var lucroPercentual = ((precoRevenda - precoCompra) / precoCompra) * 100;
+
+            // Adicionar linha à tabela
+            var tabela = document.getElementById('tabelaPrecos').getElementsByTagName('tbody')[0];
+            var novaLinha = tabela.insertRow(tabela.rows.length);
+            var celulaProduto = novaLinha.insertCell(0);
+            var celulaCompra = novaLinha.insertCell(1);
+            var celulaRevenda = novaLinha.insertCell(2);
+            var celulaLucro = novaLinha.insertCell(3);
+            var celulaAcao = novaLinha.insertCell(4);
+
+            celulaProduto.innerHTML = produtoNome;
+            celulaCompra.innerHTML = 'R$ ' + precoCompra.toFixed(2);
+            celulaRevenda.innerHTML = 'R$ ' + precoRevenda.toFixed(2);
+            celulaLucro.innerHTML = lucroPercentual.toFixed(2) + '%';
+
+            // Adicionar botão de exclusão
+            var excluirBtn = document.createElement('button');
+            excluirBtn.innerHTML = 'Excluir';
+            excluirBtn.className = 'excluirBtn';
+            excluirBtn.addEventListener('click', function() {
+                tabela.deleteRow(this.parentNode.parentNode.rowIndex);
+            });
+            celulaAcao.appendChild(excluirBtn);
+
+            // Limpar campos do formulário
+            document.getElementById('produtoNome').value = '';
+            document.getElementById('precoCompra').value = '';
+            document.getElementById('precoRevenda').value = '';
+        });
+    </script>
+
+</body>
+</html>

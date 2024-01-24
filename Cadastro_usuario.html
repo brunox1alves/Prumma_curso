@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página de Formulário</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        form {
+            max-width: 600px;
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        input[type="date"],
+        input[type="email"],
+        input[type="tel"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 12px;
+            box-sizing: border-box;
+        }
+
+        input[type="submit"] {
+            background-color: #4caf50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Formulário de Cadastro de Usuário -->
+    <h2>Formulário de Cadastro de Usuário</h2>
+    <form id="cadastroForm">
+        <label for="nome">Nome:</label>
+        <input type="text" id="nome" name="nome" required>
+
+        <label for="email">E-mail:</label>
+        <input type="email" id="email" name="email" required>
+
+        <label for="senha">Senha:</label>
+        <input type="password" id="senha" name="senha" required>
+
+        <label for="telefone">Número de Celular:</label>
+        <input type="tel" id="telefone" name="telefone" placeholder="(XX) XXXX-XXXX" maxlength="15">
+    
+        <label for="idade">Idade:</label>
+        <input type="number" id="idade" name="idade" min="18" max="99">
+
+        <label for="sexo">Sexo:</label>
+        <select id="sexo" name="sexo">
+            <option value="masculino">Masculino</option>
+            <option value="feminino">Feminino</option>
+            <option value="outro">Outro</option>
+        </select>
+
+        <input type="submit" value="Cadastrar">
+    </form>
+
+    <!-- Formulário de Envio de E-mail -->
+    <h2>Formulário de Envio de E-mail</h2>
+    <form id="emailForm">
+        <label for="remetente">Remetente:</label>
+        <input type="text" id="remetente" name="remetente" required>
+
+        <label for="destinatario">Destinatário:</label>
+        <input type="email" id="destinatario" name="destinatario" required>
+
+        <label for="assunto">Assunto:</label>
+        <input type="text" id="assunto" name="assunto" required>
+
+        <label for="mensagem">Mensagem:</label>
+        <textarea id="mensagem" name="mensagem" rows="4" required></textarea>
+
+        <label for="anexo">Anexo (imagem):</label>
+        <input type="file" id="anexo" name="anexo" accept="image/*">
+
+        <label for="confirmacao">Confirmação de Leitura:</label>
+        <input type="checkbox" id="confirmacao" name="confirmacao">
+
+        <input type="submit" value="Enviar E-mail">
+    </form>
+
+    <script>
+        document.getElementById('cadastroForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            // Lógica para processar o formulário de cadastro de usuário
+            alert('Cadastro de usuário submetido!');
+        });
+
+        document.getElementById('emailForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            // Lógica para processar o formulário de envio de e-mail
+            alert('E-mail submetido!');
+        });
+    </script>
+
+</body>
+</html>
